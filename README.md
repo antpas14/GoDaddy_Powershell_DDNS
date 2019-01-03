@@ -1,3 +1,7 @@
+Forked from binnychan/GoDaddy_Powershell_DDNS
+- Fix format for updating ddns
+- Credentials in an external configuration file
+
 # GoDaddy_Linux_DDNS
 Simple script to check and update a Godaddy domain with your public ip address from you internet provider
 

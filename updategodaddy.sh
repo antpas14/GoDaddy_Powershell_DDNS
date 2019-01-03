@@ -15,6 +15,8 @@
 # Be aware that there are 2 types of key and secret - one for the test server and one for the production server
 # Get a key and secret for the production server
 
+. config
+
 # Check an A record and a domain are both specified on the command line.
 if [ $# -ne 3 ]; then
     echo "usage: $0 type a_record domain_name"
@@ -28,10 +30,6 @@ name=$2     # name of A record to update
 domain=$3   # name of domain to update
 cache=/tmp/.updategodaddy.$type.$name.$domain.addr
 [ -e $cache ] && old=`cat $cache`
-
-# Modify the next two lines with your key and secret
-key=""      # key for godaddy developer API
-secret=""   # secret for godaddy developer API
 
 headers="Authorization: sso-key $key:$secret"
 
@@ -73,7 +71,7 @@ echo $name"."$domain": $(date): $type: dnsIp:" $dnsIp
 if [ $dnsIp != $currentIp ];
  then
         echo $name"."$domain": $(date): $type: IPs not equal. Updating."
-        request='{"data":"'$currentIp'","ttl":3600}'
+        request='[{"data":"'$currentIp'","ttl":3600}]'
         #echo $request
         nresult=$(curl -i -k -s -X PUT \
  -H "$headers" \
